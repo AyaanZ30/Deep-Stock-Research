@@ -2,7 +2,8 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import SerperDevTool
 from pydantic import BaseModel, Field
-from typing import List
+from typing import List 
+from .tools.custom_tool import PushoverNotificationTool
 
 # defines the parameters to be present mandatorily for each finding
 class TrendingCompany(BaseModel):
@@ -62,6 +63,7 @@ class StockFinder():
     def stock_picker(self) -> Agent:
         return Agent(
             config = self.agents_config['stock_picker'],
+            tools = [PushoverNotificationTool()]
         )
     
     @task 
